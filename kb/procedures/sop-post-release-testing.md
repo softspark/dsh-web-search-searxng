@@ -46,15 +46,26 @@ tar -tzf softspark-dsh-web-search-searxng-X.Y.Z.tgz
 ```bash
 export DSH_HOME=$(mktemp -d)
 dsh plugin --profile smoke add @softspark/dsh-web-search-searxng@X.Y.Z
-grep -A3 'id: web$' "$DSH_HOME/profiles/smoke/cordis.yml"
+P="$DSH_HOME/profiles/smoke"
+cat "$P/package.json"
+cat "$P/node_modules/@softspark/dsh-web-search-searxng/cordis.patch.yml"
 ```
 
-- [ ] The `web-search-searxng` row is present
-- [ ] `web.searchProvider` reads `searxng`
+- [ ] `dsh.profile.bundles` lists the package, after `@deepseek-ai/dsh-base`
+- [ ] The shipped patch carries the `insert:` row **and** the `patch:` row setting `searchProvider: searxng`
 
-The second line is the one worth checking. The `insert:` row alone leaves a
+The second box is the one worth checking. The `insert:` row alone leaves a
 provider that is registered and never selected, and nothing reports that as an
 error.
+
+Read the package's own `cordis.patch.yml`, not a composed `cordis.yml`: a fresh
+profile has no composed file, because DSH builds the composition at boot rather
+than at install. Confirming the composed result is step 4's job, against a
+harness that actually started.
+
+`pnpm peers check` reports `@deepseek-ai/cordis` and `@deepseek-ai/dsh-web`
+missing here. That is correct and not a finding — both are harness runtime
+seams, declared as peers precisely so the bundle does not carry its own copy.
 
 ## 4. A real search returns real sources
 
