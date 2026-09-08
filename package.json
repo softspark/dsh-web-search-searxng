@@ -1,0 +1,103 @@
+{
+  "name": "@softspark/dsh-web-search-searxng",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness web-search provider backed by a SearXNG instance: metasearch with no vendor API key and no account tying the queries together.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh",
+    "searxng",
+    "web-search",
+    "search",
+    "metasearch",
+    "privacy"
+  ],
+  "homepage": "https://github.com/softspark/dsh-web-search-searxng",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softspark/dsh-web-search-searxng.git"
+  },
+  "bugs": {
+    "url": "https://github.com/softspark/dsh-web-search-searxng/issues"
+  },
+  "funding": "https://softspark.eu",
+  "license": "Apache-2.0",
+  "author": "SoftSpark <biuro@softspark.eu>",
+  "type": "module",
+  "sideEffects": false,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.d.ts",
+    "lib/**/*.d.ts.map",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "packageManager": "npm@11.13.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "installConfig": {
+    "ignore-scripts": true
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/ tests/ scripts/ --max-warnings=0",
+    "lint:fix": "eslint src/ tests/ scripts/ --fix",
+    "typecheck": "tsc --noEmit",
+    "validate:kb": "node scripts/validate-kb.mjs",
+    "verify:required-files": "node scripts/verify-required-files.mjs",
+    "verify:version": "node scripts/verify-version-sync.mjs",
+    "verify": "npm run verify:required-files && npm run verify:version && npm run validate:kb",
+    "audit": "node scripts/audit.mjs --ci",
+    "audit:sarif": "node scripts/audit.mjs --sarif",
+    "audit:dependencies": "npm audit --audit-level=high --ignore-scripts",
+    "audit:signatures": "npm audit signatures",
+    "package:check": "npm pack --dry-run --ignore-scripts"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "3.18.2"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-web": "0.1.1-rc.2 || 0.1.2-rc.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/cordis-plugin-include": "1.0.7",
+    "@deepseek-ai/cordis-plugin-loader": "1.0.3",
+    "@deepseek-ai/dsh-web": "0.1.2-rc.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.4.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "eslint": "10.9.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.68.0",
+    "vitest": "4.1.11"
+  }
+}

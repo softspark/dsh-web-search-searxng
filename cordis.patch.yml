@@ -1,0 +1,19 @@
+# Point the harness web seam at a SearXNG instance instead of the shipped
+# DeepSeek provider.
+#
+# Two rows, and both are needed. Registering this provider alone changes
+# nothing: `web.searchProvider` still names `deepseek-official`, and a
+# configured id that is registered always wins. The `patch:` row is what moves
+# the selection.
+#
+# `baseURL` has no default and must be supplied by the deployment — see the
+# README. Without it the plugin loads and reports itself unavailable, which is
+# the honest outcome for "no instance was configured".
+- insert:
+    - id: web-search-searxng
+      name: '@softspark/dsh-web-search-searxng'
+
+- patch:
+    - id: web
+      config:
+        searchProvider: searxng
