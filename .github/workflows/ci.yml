@@ -97,7 +97,15 @@ jobs:
         with:
           name: dsh-web-search-searxng-audit-sarif
           path: audit.sarif
+      # Code Scanning ingestion needs Advanced Security, which is free on a
+      # public repository and a paid licence on a private one; without it the
+      # upload fails with "Resource not accessible by integration". The SARIF is
+      # still generated and kept as an artefact either way, so the audit gate
+      # keeps its teeth while the repository is private.
       - uses: github/codeql-action/upload-sarif@v4
-        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+        if: >-
+          github.event.repository.visibility == 'public'
+          && (github.event_name == 'push'
+              || github.event.pull_request.head.repo.full_name == github.repository)
         with:
           sarif_file: audit.sarif
