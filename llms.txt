@@ -1,0 +1,26 @@
+# dsh-web-search-searxng
+
+> A DeepSeek Harness web-search provider backed by a SearXNG instance. No API key, no vendor account, and nothing for the plugin to store.
+
+`@softspark/dsh-web-search-searxng` registers one search provider on the harness `ctx.web` seam, id `searxng`, and moves `web.searchProvider` onto it. The harness ships one search provider and it is gated on `DEEPSEEK_API_KEY`; a key is an identity as much as a payment detail, and searching the web does not require one.
+
+Apache-2.0. Unofficial and not affiliated with DeepSeek or the SearXNG project.
+
+## Docs
+
+- [README](README.md): install, configuration keys, what the bundle patch does, behaviour and failure modes
+- [Set up an instance](kb/howto/setup.md): run SearXNG, enable the JSON output format it disables by default, point the plugin at it
+- [Architecture](kb/reference/architecture.md): the web seam, provider selection rules, result mapping, boundaries
+- [ADR-001: a search provider, not a key](kb/decisions/adr-001-provider-not-key.md): why the provider is replaced rather than the key supplied
+- [Common issues](kb/troubleshooting/common-issues.md): a provider that is never selected, an instance answering HTML, searches that reach nothing
+
+## Procedures
+
+- [SOP: Pre-Commit Quality Gate](kb/procedures/sop-pre-commit.md)
+- [SOP: Release](kb/procedures/sop-release.md)
+- [SOP: Post-Release Testing](kb/procedures/sop-post-release-testing.md)
+
+## Policy
+
+- [SECURITY.md](SECURITY.md): no credentials by design, one outbound request per search, query never placed in an error
+- [CHANGELOG.md](CHANGELOG.md)
