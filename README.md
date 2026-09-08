@@ -1,6 +1,13 @@
 # dsh-web-search-searxng
 
-A [DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/) web-search provider backed by a [SearXNG](https://docs.searxng.org/) instance. No API key, no vendor account, and nothing for this plugin to store.
+> A web-search provider for the DeepSeek Harness, backed by a [SearXNG](https://docs.searxng.org/) instance. No API key, no vendor account, and nothing for this plugin to store.
+
+[![npm](https://img.shields.io/npm/v/@softspark/dsh-web-search-searxng.svg)](https://www.npmjs.com/package/@softspark/dsh-web-search-searxng)
+[![CI](https://github.com/softspark/dsh-web-search-searxng/actions/workflows/ci.yml/badge.svg)](https://github.com/softspark/dsh-web-search-searxng/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![DSH community plugin](https://img.shields.io/badge/DSH-community%20plugin-4b8bbe.svg)](https://github.com/topics/dsh-plugin)
+
+The harness ships one search provider and it is gated on `DEEPSEEK_API_KEY`. This registers a second one on the same seam and moves the selection onto it.
 
 ```bash
 dsh plugin add @softspark/dsh-web-search-searxng
@@ -16,6 +23,20 @@ Then tell it where the instance is:
 ```
 
 This is an independently maintained SoftSpark integration. It is unofficial and is not affiliated with or endorsed by DeepSeek or the SearXNG project.
+
+---
+
+## What's new in 1.0.0
+
+First public release.
+
+- One `ctx.web` search provider, id `searxng`, and the bundle patch that actually selects it — registering alone changes nothing, and nothing reports that as an error.
+- Results deduplicated by URL, because metasearch merges engines and the same page arrives more than once.
+- Optional fields omitted rather than invented; `dsh-tool-web` already renders `title ?? hostname(url)`.
+- A named error for the JSON format SearXNG does not enable by default, so an instance answering HTML with HTTP 200 does not read as "no results".
+- No credential path at all, no redirects followed, and no error that carries the query.
+
+Full history in [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
